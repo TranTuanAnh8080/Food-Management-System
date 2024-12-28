@@ -33,6 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     // TÌM KIẾM DỰA TRÊN ID
     @Override
     public EmployeeDTO getEmployeeById(Long employeeID) {
+        //lấy ra đối tượng dựa trên id tìm kiếm
         Employee employeeByID = employeeRepository.findById(employeeID)
                 .orElseThrow(() -> new ResourceNotFoundException("There is no Employee ID existed " + employeeID));
 
@@ -57,6 +58,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setLastName(updatedEmployee.getLastName());
         employee.setEmail(updatedEmployee.getEmail());
 
+        // LƯU MỚI DỮ LIỆU VÀO LẠI DATABASE
         Employee newUpdatedEmployee = employeeRepository.save(employee);
 
         return EmployeeMapper.mapToEmployeeDTO(newUpdatedEmployee);
@@ -64,10 +66,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployeeById(Long employeeIDDeleted) {
-       Employee employee =  employeeRepository.findById(employeeIDDeleted)
-                .orElseThrow(() -> new ResourceNotFoundException("There is no Employee ID existed " + employeeIDDeleted));
-
-       employeeRepository.deleteById(employeeIDDeleted);
+        boolean exists = employeeRepository.existsById(employeeIDDeleted);
+        if (!exists) {
+            throw new ResourceNotFoundException("Employee with ID " + employeeIDDeleted + " does not exist.");
+        }
+        employeeRepository.deleteById(employeeIDDeleted);
     }
 
 

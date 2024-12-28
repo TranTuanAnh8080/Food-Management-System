@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 // "BẮT BUỘC" phải có từ khóa 'path'
 @RequestMapping(path = "/api/employees")
@@ -48,6 +49,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employees);
     }
 
+    //UPDATE EMPLOYEE
     @PutMapping("{id}")
     public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable("id") Long id,
                                                       @RequestBody EmployeeDTO employeeUpdatedDTO) {
@@ -57,6 +59,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeUpdated);
     }
 
+    ///DELETE EMPLOYEE
     @DeleteMapping("{id}")
     public ResponseEntity<String> deleteEmployeeById(@PathVariable("id") Long IDEmployeeDeleted) {
         employeeService.deleteEmployeeById(IDEmployeeDeleted);
