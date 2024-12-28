@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-// chuyển chuỗi JSON (requestBody) thành DTO cho springboot xử lý
-// từ DTO chuyển thành dạng Entity để lưu vào CSDL
+// chuyển chuỗi JSON (requestBody) thành DTO cho spring-boot xử lý
+// từ DTO chuyển thành dạng Entity để lưu vào CSDL(DATABASE)
 public class BackEndApplication {
 
 	public static void main(String[] args) {

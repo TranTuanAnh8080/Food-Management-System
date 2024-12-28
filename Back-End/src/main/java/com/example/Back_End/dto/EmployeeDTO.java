@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Getter
-@Setter
+//@Getter
+//@Setter
 //@NoArgsConstructor
 //@AllArgsConstructor
 // DTO được sử dụng để phản hồi (response) API
@@ -37,6 +37,7 @@ public class EmployeeDTO {
     public void setId(Long id) {
         this.id = id;
     }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
