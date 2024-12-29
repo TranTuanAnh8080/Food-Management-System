@@ -1,10 +1,15 @@
 
 import React, { useState, useEffect } from "react";
-import { listEmployees } from "../Services/EmployeesService";
+import { useNavigate } from "react-router-dom";
+import { listEmployees } from "../services/EmployeesService";
 const ListEmployeesComponent = () => {
 
     const [employees, setEmployees] = useState([]);
     const [error, setError] = useState("");
+
+    const navigator = useNavigate();
+
+    //useEffect: Hook dùng để ktra, phản hồi HTTP
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
@@ -19,11 +24,17 @@ const ListEmployeesComponent = () => {
         fetchEmployees();
     }, []);
 
-    return (
-        <>
-            <h2>List of Employees</h2>
+    const addNewEmployee = () => {
+        navigator('/add-employee');
+    }
 
-            <table>
+    return (
+        <div className="container">
+            <h2 className="text-center mt-5">List of Employees</h2>
+
+            <button type="button" className="btn btn-primary mb-2"
+            onClick={addNewEmployee}>Add Employee</button>
+            <table className="table table-primary table-border">
                 <thead>
                     <tr>
                         <th>First Name</th>
@@ -43,7 +54,7 @@ const ListEmployeesComponent = () => {
                     }
                 </tbody>
             </table>
-        </>
+        </div>
     );
 }
 
