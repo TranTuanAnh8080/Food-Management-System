@@ -36,6 +36,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> getEmployeeByID(@PathVariable("id") Long employeeID) {
         EmployeeDTO employeeExisted = employeeService.getEmployeeById(employeeID);
 
+        //update trạng thái là về là 200 (ok)
         return ResponseEntity.ok(employeeExisted);
 
     }
