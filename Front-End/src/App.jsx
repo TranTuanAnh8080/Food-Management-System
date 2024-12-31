@@ -12,7 +12,12 @@ function App() {
         <Route path='/' element={<ListEmployeesComponent />}></Route>
         {/* http://localhost:3000/employees */}
         <Route path='/employees' element={<ListEmployeesComponent />}></Route>
+        {/* ADD EMPLOYEE */}
         <Route path='/add-employee' element={<EmployeeComponent />}></Route>
+        {/* UPDATE EMPLOYEE */}
+
+        {/* khi lấy ra id cần update của object cụ thể, phải có dấu ":" */}
+        <Route path='/update-employee/:id' element={<EmployeeComponent />}></Route>
 
       </Routes>
     </Router>

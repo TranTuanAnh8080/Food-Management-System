@@ -36,7 +36,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> getEmployeeByID(@PathVariable("id") Long employeeID) {
         EmployeeDTO employeeExisted = employeeService.getEmployeeById(employeeID);
 
-        return new ResponseEntity<>(employeeExisted, HttpStatus.FOUND);
+        return ResponseEntity.ok(employeeExisted);
 
     }
 
