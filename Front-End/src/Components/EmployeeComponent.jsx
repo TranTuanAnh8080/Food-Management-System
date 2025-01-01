@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createEmployee, updateEmployeeByID } from "../Services/EmployeesService";
+import { createEmployee, updateEmployee, updateEmployeeByID } from "../Services/EmployeesService";
 import { useNavigate, useParams } from "react-router-dom";
 const EmployeeComponent = () => {
 
@@ -11,22 +11,27 @@ const EmployeeComponent = () => {
     //tham số đã định nghĩa trong Route (:id)
     const { id } = useParams();
 
+    const navigator = useNavigate();
+
     const [errors, setErrors] = useState({});
 
+    //LẤY RA DỮ LIỆU DỰA TRÊN ID CỦA EMPLOYEE 
     useEffect(() => {
-        if (id) {
-            updateEmployeeByID(id).then((response) => {
-                setFirstName(response.data.firstName);
-                setLastName(response.data.lastName);
-                setEmail(response.data.email);
-            }).catch(error => {
-                console.error("There was an error while fetching employee data!", error);
-            })
+        const fetchEmployeeByID = async () => {
+            if (id) {
+                try {
+                    //chờ phản hồi từ phía API -backend để lấy ra id
+                    const response = await updateEmployeeByID(id);
+                    setFirstName(response.data.firstName);
+                    setLastName(response.data.lastName);
+                    setEmail(response.data.email);
+                } catch (error) {
+                    console.error("Fetching employee by id error !!!", error);
+                }
+            }
         }
+        fetchEmployeeByID();
     }, [id]);
-
-    // Add this part to render the error message
-
 
     //FORM XÁC THỰC DỮ LIỆU
     const validationForm = () => {
@@ -52,25 +57,37 @@ const EmployeeComponent = () => {
         return isValid;
     }
 
-    const navigator = useNavigate();
 
-    //THÊM MỚI DỮ LIỆU EMPLOYEE
-    const saveEmployee = async () => {
+    //THÊM MỚI VÀ UPDATE DỮ LIỆU EMPLOYEE
+    //hàm xử lý bất đồng bộ (async -await)
+    const saveOrUpdateEmployee = async (e) => {
+        e.preventDefault();
+
         const addedEmployee = { firstName, lastName, email };
 
-        try {
-
-            if (!validationForm()) return;
-            // chờ một Promise được resolve hoặc reject
-            // createEmployee(addedEmployee) sẽ được thực thi => rồi mới tới saveEmployee xử lý
-            // việc xử lý promise này phải nằm trong "async" function
-            const response = await createEmployee(addedEmployee);
-            console.log(response.data);
-            navigator('/employees');
-        } catch (error) {
-            console.error("There was an error while creating new employee!", error);
+        if (validationForm()) {
+            try {
+                if (id) {
+                    //gửi yêu cầu và phản hồi từ API (updateEmployee) - phía backend
+                    const response = await updateEmployee(id, addedEmployee);
+                    //nếu thành công thì chuyển hướng đến trang employees
+                    console.log(response.data);
+                    console.log("Object updated successfully!!!");
+                    navigator('/employees');
+                } else {
+                    //chờ yêu cầu và phản hồi từ API (createEmployee) - phía backend
+                    const response = await createEmployee(addedEmployee);
+                    console.log(response.data);
+                    navigator('/employees');
+                }
+            } catch (error) {
+                console.error("Something happened during execution for a while!!!", error);
+            }
+        } else {
+            console.error("You are required to fill out all of fields!!!");
+            return;
         }
-    }
+    };
 
     const pageTitle = () => {
         if (id) {
@@ -84,7 +101,7 @@ const EmployeeComponent = () => {
 
 
         <div className="container mt-5">
-          
+
             <div className="row">
                 <div className="card col-md-6 offset-md-3 offset-md-3">
 
@@ -104,6 +121,7 @@ const EmployeeComponent = () => {
                                         setFirstName(e.target.value);
                                         if (errors.firstName) {
                                             //nếu có lỗi và người dùng bắt đầu nhập liệu thì xóa lỗi
+                                            //firstName: "" - trạng thái rỗng
                                             setErrors({ ...errors, firstName: "" })
                                         }
                                     }}
@@ -153,7 +171,7 @@ const EmployeeComponent = () => {
                             </div>
                             <div className="text-center">
                                 <button type="button" className="btn btn-success "
-                                    onClick={saveEmployee}>Submit</button>
+                                    onClick={saveOrUpdateEmployee}>Submit</button>
                             </div>
 
                         </form>

@@ -1,0 +1,83 @@
+.container-popup {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Lớp phủ làm mờ */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Màu đen mờ */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup {
+    width: 400px;
+    height: 300px;
+    background: #fff;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    /* điều chỉnh để nằm giữa trang */
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    pad: 0 30px 30px;
+    color: #333;
+    /* ẨN POP-UP */
+    visibility: hidden;
+    transition: transform 0.5s, top 0.5s;
+}
+
+.open-popup {
+    /* KHI NHẤN VÀO THÌ POP-UP MỚI HIỆN */
+    visibility: visible;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.popup img {
+    width: 15%;
+    margin-top: -28px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.popup h2 {
+    font-size: 35px;
+    font-weight: 500;
+    margin: 30px 0 10px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.popup p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.popup button {
+    width: 100%;
+    margin-top: 50px;
+    padding: 10px 0;
+    background: #6fd649;
+    color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: grab;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
