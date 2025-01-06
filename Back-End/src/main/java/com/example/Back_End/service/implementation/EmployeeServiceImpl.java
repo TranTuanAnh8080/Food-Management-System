@@ -33,13 +33,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     // TÌM KIẾM DỰA TRÊN ID
     @Override
     public EmployeeDTO getEmployeeById(Long employeeID) {
-        //lấy ra đối tượng dựa trên id tìm kiếm
+        //lấy ra đối tượng dựa trên id tìm kiếm (trong DATABASE)
         Employee employeeByID = employeeRepository.findById(employeeID)
                 .orElseThrow(() -> new ResourceNotFoundException("There is no Employee ID existed " + employeeID));
-
+        //phản hồi lại dữ liệu DTO về phía Controller
         return EmployeeMapper.mapToEmployeeDTO(employeeByID);
     }
 
+    //LẤY RA TẤT CẢ EMPLOYEES
     @Override
     public List<EmployeeDTO> getAllEmployees() {
         List<Employee> employees = employeeRepository.findAll();
@@ -48,6 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .collect(Collectors.toList());
     }
 
+    //CẬP NHẬT
     @Override
     public EmployeeDTO updateEmployee(Long employeeUpdatedID, EmployeeDTO updatedEmployee) {
 
@@ -64,6 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return EmployeeMapper.mapToEmployeeDTO(newUpdatedEmployee);
     }
 
+    //XÓA DỰA TRÊN ID
     @Override
     public void deleteEmployeeById(Long employeeIDDeleted) {
         boolean exists = employeeRepository.existsById(employeeIDDeleted);

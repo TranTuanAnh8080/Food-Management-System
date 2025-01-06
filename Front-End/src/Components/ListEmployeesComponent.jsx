@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { deleteEmployee, listEmployees } from "../Services/EmployeesService.js";
-import popup from '../assets/image/404-tick.png'
+import popup from '../assets/image/tick.png'
 import "../styles/pop-up.css"
 const ListEmployeesComponent = () => {
 
@@ -61,7 +61,7 @@ const ListEmployeesComponent = () => {
                 console.error(error);
             }
         }
-
+        //XUẤT HIEN POP-UP
         openPopup();
     }
     return (
