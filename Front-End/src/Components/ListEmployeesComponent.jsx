@@ -21,6 +21,7 @@ const ListEmployeesComponent = () => {
     //ĐIỀU HƯỚNG TỚI URL CỤ THỂ
     const navigator = useNavigate();
 
+
     const getAllEmployees = async () => {
         try {
             //chờ phản hồi API từ backend
@@ -56,7 +57,7 @@ const ListEmployeesComponent = () => {
             try {
                 const response = await deleteEmployee(id);
                 console.warn("You've already deleted employee with id: " + id + " successfully!", response.status);
-                getAllEmployees();
+                getAllEmployees(); // in ra danh sách nhân viên sau khi xóa
             } catch (error) {
                 console.error(error);
             }
@@ -64,6 +65,9 @@ const ListEmployeesComponent = () => {
         //XUẤT HIEN POP-UP
         openPopup();
     }
+
+
+
     return (
         <div className="container">
             <h2 className="text-center mt-5">List of Employees</h2>

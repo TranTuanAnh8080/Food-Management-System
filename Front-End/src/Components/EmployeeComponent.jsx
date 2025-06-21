@@ -15,7 +15,7 @@ const EmployeeComponent = () => {
 
     const [errors, setErrors] = useState({});
 
-    //LẤY RA DỮ LIỆU DỰA TRÊN ID CỦA EMPLOYEE 
+    //LẤY RA DỮ LIỆU DỰA TRÊN ID CỦA EMPLOYEE ĐỂ CHUẨN BỊ UPDATE
     useEffect(() => {
         const fetchEmployeeByID = async () => {
             if (id) {
@@ -32,6 +32,8 @@ const EmployeeComponent = () => {
         }
         fetchEmployeeByID();
     }, [id]);
+
+
 
     //FORM XÁC THỰC DỮ LIỆU
     const validationForm = () => {
@@ -58,14 +60,17 @@ const EmployeeComponent = () => {
     }
 
 
-    //THÊM MỚI VÀ UPDATE DỮ LIỆU EMPLOYEE
+    //THÊM MỚI VÀ UPDATE DỮ LIỆU EMPLOYEE dùng ( e.preventDefault())
     //hàm xử lý bất đồng bộ (async -await)
     const saveOrUpdateEmployee = async (e) => {
         e.preventDefault();
 
         const addedEmployee = { firstName, lastName, email };
 
-        if (validationForm()) {
+        if (!validationForm()) {
+            console.error("%cYou are required to fill out all of fields!!!", "color: red; font-weight: bold; font-size: 15px");
+            return;
+        } else {
             try {
                 if (id) {
                     //gửi yêu cầu và phản hồi từ API (updateEmployee) - phía backend
@@ -83,11 +88,11 @@ const EmployeeComponent = () => {
             } catch (error) {
                 console.error("Something happened during execution for a while!!!", error);
             }
-        } else {
-            console.error("You are required to fill out all of fields!!!");
-            return;
         }
+        
+            console.log("%cSuccessfully added employee!!!", "color: green; font-weight: bold; font-size: 15px");
     };
+
 
     const pageTitle = () => {
         if (id) {
